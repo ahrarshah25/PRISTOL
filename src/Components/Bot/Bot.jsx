@@ -5,23 +5,19 @@ import Input from "./Input";
 import Button from "./Button";
 import Messages from "./Messages";
 
-const Bot = () => {
+const Bot = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
   const agencticAi =
-    "https://ahrar-shah-portfolio-backend.vercel.app/api/agentic-ai";
+    "https://pristol-backend.vercel.app/api/Bot/agentic-ai";
 
   useEffect(() => {
     const welcomeMessage = {
       id: Date.now(),
       type: "bot",
-      content: {
-        title: "🤖 PRISTOL AI Assistant",
-        text: "Hello! Ask me anything about PRISTOL products, ingredients, usage, or benefits!",
-        footer: "I'm here to help 24/7.",
-      },
+      content: "🤖 PRISTOL AI Assistant \n Hello! Ask me anything about PRISTOL products, ingredients, usage, or benefits! \n I'm here to help 24/7.",
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);
@@ -113,6 +109,8 @@ const Bot = () => {
   };
 
   return (
+    <>
+    {children}
     <div className="w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-4 flex items-center gap-3">
         <BotIcon />
@@ -140,6 +138,7 @@ const Bot = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

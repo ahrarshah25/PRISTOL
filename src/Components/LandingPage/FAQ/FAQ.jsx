@@ -5,7 +5,7 @@ import Question from './Question'
 import Icon from './Icon'
 import Message from './Message'
 
-const FAQ = () => {
+const FAQ = ({ botOpen, func }) => {
   const [openId, setOpenId] = useState(null)
 
   const toggleFAQ = (id) => {
@@ -52,7 +52,7 @@ const FAQ = () => {
         <div className="mt-12 text-center">
           <p className="text-gray-600">
             Still have questions?{' '}
-            <button className="text-green-600 font-semibold hover:text-green-700 hover:underline transition-all">
+            <button onClick={() => {func(!botOpen)}} className="text-green-600 font-semibold hover:text-green-700 hover:underline transition-all">
               Contact our support team
             </button>
           </p>

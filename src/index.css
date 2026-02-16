@@ -280,3 +280,7 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background: #16a34a;
 }
+
+.swal-margin-top {
+  margin-top: 50px !important;
+}

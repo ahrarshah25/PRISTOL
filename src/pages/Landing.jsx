@@ -7,19 +7,20 @@ import Working from "../Components/LandingPage/Working/Working";
 import Footer from "../Components/LandingPage/Footer/Footer";
 import Bot from "../Components/Bot/Bot";
 import FAQ from "../Components/LandingPage/FAQ/FAQ";
-import { MessageCircle, X } from 'lucide-react'
+import { MessageCircle, X } from 'lucide-react';
 
 const Landing = () => {
-  const [isBotOpen, setIsBotOpen] = useState(false) 
+  const [isBotOpen, setIsBotOpen] = useState(false)
 
   return (
     <div>
+      <title>PRISTOL - The Future of Pure Protection</title>
       <Navbar />
       <Hero />
       <Slider />
       <Features />
       <Working />
-      <FAQ />
+      <FAQ botOpen={isBotOpen} func={setIsBotOpen} />
       <Footer />
       
       <button
