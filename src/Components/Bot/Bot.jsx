@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { X, MessageCircle } from "lucide-react";
 import BotIcon from "./BotIcon";
 import Title from "./Title";
 import Input from "./Input";
@@ -6,18 +7,19 @@ import Button from "./Button";
 import Messages from "./Messages";
 
 const Bot = ({ children }) => {
+  const [isBotOpen, setIsBotOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
-  const agencticAi =
-    "https://pristol-backend.vercel.app/api/Bot/agentic-ai";
+  const agencticAi = "https://pristol-backend.vercel.app/api/Bot/agentic-ai";
 
   useEffect(() => {
     const welcomeMessage = {
       id: Date.now(),
       type: "bot",
-      content: "🤖 PRISTOL AI Assistant \n Hello! Ask me anything about PRISTOL products, ingredients, usage, or benefits! \n I'm here to help 24/7.",
+      content:
+        "🤖 PRISTOL AI Assistant \n Hello! Ask me anything about PRISTOL products, ingredients, usage, or benefits! \n I'm here to help 24/7.",
       timestamp: new Date(),
     };
     setMessages([welcomeMessage]);
@@ -110,34 +112,54 @@ const Bot = ({ children }) => {
 
   return (
     <>
-    {children}
-    <div className="w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-4 flex items-center gap-3">
-        <BotIcon />
-        <Title />
-      </div>
+      {children}
 
-      <div className="h-96 overflow-y-auto p-4 bg-gray-50">
-        <Messages messages={messages} />
-        <div ref={messagesEndRef} />
-      </div>
+      <button
+        onClick={() => setIsBotOpen(!isBotOpen)}
+        className={`mb-[30px] fixed bottom-4 right-4 z-50 p-4 rounded-full shadow-2xl transition-all duration-300 ${
+          isBotOpen
+            ? "bg-red-500 hover:bg-red-600 rotate-90"
+            : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:scale-110"
+        }`}
+      >
+        {isBotOpen ? (
+          <X className="w-6 h-6 text-white" />
+        ) : (
+          <MessageCircle className="w-6 h-6 text-white" />
+        )}
+      </button>
 
-      <div className="p-4 border-t border-gray-200 bg-white">
-        <div className="flex items-center gap-2">
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={handleKeyPress}
-            disabled={isLoading}
-            placeholder="Ask about PRISTOL products..."
-          />
-          <Button
-            onClick={handleSendMessage}
-            disabled={isLoading || !inputValue.trim()}
-          />
+      {isBotOpen && (
+        <div className="fixed bottom-20 right-4 z-50 animate-slideUp">
+          <div className="w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-gray-900 to-gray-800 p-4 flex items-center gap-3">
+              <BotIcon />
+              <Title />
+            </div>
+
+            <div className="h-96 overflow-y-auto p-4 bg-gray-50">
+              <Messages messages={messages} />
+              <div ref={messagesEndRef} />
+            </div>
+
+            <div className="p-4 border-t border-gray-200 bg-white">
+              <div className="flex items-center gap-2">
+                <Input
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={isLoading}
+                  placeholder="Ask about PRISTOL products..."
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={isLoading || !inputValue.trim()}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
     </>
   );
 };

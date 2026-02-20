@@ -1,10 +1,10 @@
 import Swal from "sweetalert2";
 
-const showLoading = () => {
+const showLoading = (message) => {
   Swal.fire({
     toast: true,
     position: "top-end",
-    title: "Processing...",
+    title: message,
     didOpen: () => {
       Swal.showLoading();
     },

@@ -38,7 +38,7 @@ const FAQ = ({ botOpen, func }) => {
                 className={`transition-all duration-500 ease-in-out ${
                   openId === faq.id 
                     ? 'max-h-96 opacity-100' 
-                    : 'max-h-0 opacity-0'
+                    : 'max-h-0 opacity-0 overflow-hidden'
                 }`}
               >
                 <div className="px-6 pb-5">
@@ -52,8 +52,11 @@ const FAQ = ({ botOpen, func }) => {
         <div className="mt-12 text-center">
           <p className="text-gray-600">
             Still have questions?{' '}
-            <button onClick={() => {func(!botOpen)}} className="text-green-600 font-semibold hover:text-green-700 hover:underline transition-all">
-              Contact our support team
+            <button 
+              onClick={() => func(!botOpen)} 
+              className="text-green-600 font-semibold hover:text-green-700 hover:underline transition-all"
+            >
+              Chat with our AI assistant
             </button>
           </p>
         </div>

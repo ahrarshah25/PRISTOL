@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Banner from "../Components/AboutPage/Banner";
 import RightImage from "../Components/AboutPage/RightImage";
 import Heading from "../Components/AboutPage/Heading";
@@ -10,11 +10,15 @@ import { MessageCircle, X } from 'lucide-react';
 
 const About = () => {
       const [isBotOpen, setIsBotOpen] = useState(false)
+
+      useEffect(() => {
+          document.title = "About Us - PRISTOL";
+        }, []);
     
   return (
     <>
       <Navbar />
-      <div className="mt-[85px] min-h-screen bg-white">
+      <div className="mt-[87px] min-h-screen bg-white">
         <Banner
           title="About PRISTOL"
           subtitle="Discover the story behind our premium antiseptic and cleaning solutions"

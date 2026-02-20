@@ -25,7 +25,7 @@ const Button = ({
       setInternalLoading(true);
 
       if (onClick) {
-        await onClick(e); // agar async function hai to wait karega
+        await onClick(e);
       }
     } finally {
       setInternalLoading(false);

@@ -9,7 +9,6 @@ const GermScene = () => {
   const [germs, setGerms] = useState([])
   const [isAttacking, setIsAttacking] = useState(false)
 
-  // Initialize germs
   useEffect(() => {
     const newGerms = []
     for (let i = 0; i < 15; i++) {
@@ -28,7 +27,6 @@ const GermScene = () => {
     }
     setGerms(newGerms)
 
-    // Start attack after 2 seconds
     const timer = setTimeout(() => {
       setIsAttacking(true)
     }, 2000)
@@ -38,7 +36,6 @@ const GermScene = () => {
 
   useFrame((state) => {
     if (groupRef.current) {
-      // Subtle floating animation
       groupRef.current.rotation.y += 0.001
     }
 
@@ -46,17 +43,14 @@ const GermScene = () => {
       particlesRef.current.rotation.y += 0.002
     }
 
-    // Animate germs
     setGerms(prev => prev.map(germ => {
       if (isAttacking) {
-        // Germs start disappearing
         return {
           ...germ,
           scale: Math.max(0, germ.scale - 0.005),
           position: germ.position.map(p => p + (Math.random() - 0.5) * 0.1)
         }
       } else {
-        // Normal floating motion
         return {
           ...germ,
           position: germ.position.map((p, i) => 
@@ -69,9 +63,8 @@ const GermScene = () => {
 
   return (
     <group ref={groupRef}>
-      {/* PRISTOL Bottle in Center */}
       <group position={[0, 0, 0]}>
-        {/* Bottle Body */}
+        
         <mesh castShadow receiveShadow>
           <cylinderGeometry args={[1, 0.8, 2.5, 32]} />
           <meshPhysicalMaterial 
@@ -85,13 +78,11 @@ const GermScene = () => {
           />
         </mesh>
         
-        {/* Bottle Cap */}
         <mesh position={[0, 1.4, 0]} castShadow>
           <cylinderGeometry args={[0.6, 0.6, 0.3, 16]} />
           <meshStandardMaterial color="#16a34a" emissive="#14532d" />
         </mesh>
         
-        {/* Bottle Label */}
         <mesh position={[0, 0, 1.1]} castShadow>
           <boxGeometry args={[1.2, 1, 0.1]} />
           <meshStandardMaterial color="#ffffff" emissive="#f0fdf4">
@@ -109,11 +100,9 @@ const GermScene = () => {
           PRISTOL
         </Text>
 
-        {/* Glowing Effect */}
         <pointLight position={[0, 0, 0]} distance={5} intensity={1} color="#4ade80" />
       </group>
 
-      {/* Germs */}
       {germs.map((germ) => (
         <Germ 
           key={germ.id}
@@ -124,7 +113,6 @@ const GermScene = () => {
         />
       ))}
 
-      {/* Protective Particles */}
       <group ref={particlesRef} position={[0, 0, 0]}>
         {[...Array(30)].map((_, i) => (
           <Particle 
@@ -139,7 +127,6 @@ const GermScene = () => {
         ))}
       </group>
 
-      {/* Shield Effect */}
       <mesh position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[2.5, 0.05, 16, 100]} />
         <meshStandardMaterial 
