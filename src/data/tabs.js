@@ -15,12 +15,6 @@ const tabs = [
     id: "reviews",
     name: "Reviews",
     href: "/reviews",
-    isNav: true,
-  },
-  {
-    id: "services",
-    name: "Services",
-    href: "/services",
     isNav: false,
   },
   {
