@@ -7,6 +7,10 @@ import NotFound from "./pages/NotFound";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Shop from "./pages/Shop";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+
 
 const App = () => {
   return (
@@ -18,6 +22,9 @@ const App = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

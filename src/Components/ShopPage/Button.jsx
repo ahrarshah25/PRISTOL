@@ -5,11 +5,11 @@ const Button = ({ variant, productId }) => {
   const [copied, setCopied] = useState(false)
 
   const handleViewProduct = () => {
-    window.location.href = `/product?id=${productId}`
+    window.location.href = `/product/${productId}`
   }
 
   const handleShare = async () => {
-    const url = `https://pristol.vercel.app/product?id=${productId}`
+    const url = `https://pristol.vercel.app/product/${productId}`
     
     try {
       await navigator.clipboard.writeText(url)
