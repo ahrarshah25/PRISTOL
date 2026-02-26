@@ -88,7 +88,7 @@ const Product = () => {
   }
 
   const handleBuyNow = () => {
-    showLoading('Processing...')
+    const load = showLoading('Processing...')
     setTimeout(() => {
       const productForCheckout = {
         id: product.id,
@@ -97,6 +97,7 @@ const Product = () => {
         quantity: quantity,
         imageUrl: product.imageUrl
       }
+      Swal.close(load)
       navigate('/checkout', { state: { type: 'product', product: productForCheckout } })
     }, 1000)
   }
