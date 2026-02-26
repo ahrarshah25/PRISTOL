@@ -7,6 +7,11 @@ import CartSummary from '../Components/CartPage/CartSummary'
 import EmptyCart from '../Components/CartPage/EmptyCart'
 import { ShoppingBag } from 'lucide-react'
 import fireAlert from '../Components/Alerts/alert'
+import {
+  clearCartItems,
+  getCartItems as getStoredCartItems,
+  setCartItems as saveCartItems
+} from '../utils/cartStorage'
 
 const Cart = () => {
   const navigate = useNavigate()
@@ -17,9 +22,13 @@ const Cart = () => {
     loadCartFromStorage()
   }, [])
 
+  useEffect(() => {
+      document.title = "Cart - PPRISTOL";
+    }, []);
+
   const loadCartFromStorage = () => {
     try {
-      const savedCart = JSON.parse(localStorage.getItem('cart')) || []
+      const savedCart = getStoredCartItems()
       setCartItems(savedCart)
     } catch (error) {
       console.error('Error loading cart:', error)
@@ -36,14 +45,14 @@ const Cart = () => {
       item.id === id ? { ...item, quantity: newQuantity } : item
     )
     
-    setCartItems(updatedItems)
-    localStorage.setItem('cart', JSON.stringify(updatedItems))
+    saveCartItems(updatedItems)
+    saveCartItems(updatedItems)
   }
 
   const removeItem = (id) => {
     const updatedItems = cartItems.filter(item => item.id !== id)
     setCartItems(updatedItems)
-    localStorage.setItem('cart', JSON.stringify(updatedItems))
+    setCartItems(updatedItems)
     fireAlert('success', 'Item removed from cart')
   }
 
@@ -52,7 +61,7 @@ const Cart = () => {
     
     if (window.confirm('Are you sure you want to clear your cart?')) {
       setCartItems([])
-      localStorage.removeItem('cart')
+      clearCartItems()
       fireAlert('success', 'Cart cleared successfully')
     }
   }
@@ -88,7 +97,7 @@ const Cart = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-green-50">
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mt-[100px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">

@@ -10,6 +10,7 @@ import { ShoppingBag } from 'lucide-react'
 import fireAlert from '../Components/Alerts/alert'
 import showLoading from '../Components/Alerts/loading'
 import Swal from 'sweetalert2'
+import { clearCartItems } from '../utils/cartStorage'
 
 const Checkout = () => {
   const location = useLocation()
@@ -70,7 +71,7 @@ const Checkout = () => {
       const docRef = await addDoc(collection(db, 'orders'), orderData)
       
       if (checkoutType === 'cart') {
-        localStorage.removeItem('cart')
+        clearCartItems()
       }
       
       Swal.close(loader)
@@ -84,16 +85,7 @@ const Checkout = () => {
     }
   }
 
-  const handleProductCheckout = () => {
-    const product = {
-      id: location.state?.product?.id,
-      name: location.state?.product?.name,
-      price: location.state?.product?.price,
-      quantity: location.state?.product?.quantity || 1,
-      imageUrl: location.state?.product?.imageUrl
-    }
-    navigate('/checkout', { state: { type: 'product', product } })
-  }
+  
 
   if (checkoutItems.length === 0) {
     return null
@@ -103,7 +95,7 @@ const Checkout = () => {
     <div className="min-h-screen bg-gradient-to-b from-white to-green-50">
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mt-[100px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
             <ShoppingBag className="w-6 h-6 text-green-600" />

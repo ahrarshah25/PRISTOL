@@ -19,6 +19,10 @@ const OrderConfirmation = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    document.title = "Order Placed - PRISTOL";
+  }, []);
+
+  useEffect(() => {
     const fetchOrder = async () => {
       const orderData = location.state?.order
       
@@ -37,10 +41,6 @@ const OrderConfirmation = () => {
 
   const handlePrint = () => {
     window.print()
-  }
-
-  const handleTrackOrder = () => {
-    fireAlert('info', 'Tracking feature coming soon!')
   }
 
   const handleContinueShopping = () => {
@@ -70,8 +70,8 @@ const OrderConfirmation = () => {
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       <Navbar />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Success Animation */}
+      <div className="mt-[80px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+       
         <div className="flex justify-center mb-8 animate-bounce">
           <div className="relative">
             <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center">
@@ -83,24 +83,20 @@ const OrderConfirmation = () => {
           </div>
         </div>
 
-        {/* Header */}
         <ConfirmationHeader orderId={order.id} />
 
-        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-          {/* Left Column - Order Details */}
+         
           <div className="lg:col-span-2 space-y-6">
             <OrderDetails order={order} />
-            <OrderItems items={order.items} />
+            <OrderItems items={order.items} order={order} />
           </div>
 
-          {/* Right Column - Customer Info & Actions */}
           <div className="space-y-6">
             <CustomerInfo order={order} />
             <OrderTimeline status={order.status} />
             <ActionButtons 
               onPrint={handlePrint}
-              onTrack={handleTrackOrder}
               onContinue={handleContinueShopping}
             />
           </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Printer, Package, ShoppingBag } from 'lucide-react'
 
-const ActionButtons = ({ onPrint, onTrack, onContinue }) => {
+const ActionButtons = ({ onPrint, onContinue }) => {
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
       <h2 className="text-xl font-bold text-gray-900 mb-4">Actions</h2>
@@ -15,13 +15,6 @@ const ActionButtons = ({ onPrint, onTrack, onContinue }) => {
           Print Receipt
         </button>
 
-        <button
-          onClick={onTrack}
-          className="w-full py-3 bg-blue-50 text-blue-600 rounded-xl font-medium hover:bg-blue-100 transition-all duration-300 flex items-center justify-center gap-2 group"
-        >
-          <Package className="w-4 h-4 group-hover:scale-110 transition-transform" />
-          Track Order
-        </button>
 
         <button
           onClick={onContinue}

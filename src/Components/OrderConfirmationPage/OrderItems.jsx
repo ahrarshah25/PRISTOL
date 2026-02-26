@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OrderItems = ({ items }) => {
+const OrderItems = ({ items, order }) => {
   const calculateSubtotal = () => {
     return items.reduce((total, item) => total + (item.price * item.quantity), 0)
   }
@@ -49,18 +49,18 @@ const OrderItems = ({ items }) => {
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Shipping</span>
-            <span className={items.shipping === 0 ? 'text-green-600 font-medium' : 'font-medium'}>
-              {items.shipping === 0 ? 'Free' : `Rs. ${items.shipping?.toLocaleString()}`}
+            <span className={order.shipping === 0 ? 'text-green-600 font-medium' : 'font-medium'}>
+              {order.shipping === 0 ? 'Free' : `Rs. ${order.shipping?.toLocaleString()}`}
             </span>
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600">Tax (5%)</span>
-            <span className="font-medium">Rs. {items.tax?.toLocaleString() || 0}</span>
+            <span className="font-medium">Rs. {order.tax?.toLocaleString() || 0}</span>
           </div>
           <div className="flex items-center justify-between pt-2 border-t border-gray-200">
             <span className="text-base font-semibold text-gray-900">Total</span>
             <span className="text-xl font-bold text-green-600">
-              Rs. {items.totalAmount?.toLocaleString() || items.total?.toLocaleString()}
+              Rs. {order.totalAmount?.toLocaleString() || order.total?.toLocaleString()}
             </span>
           </div>
         </div>

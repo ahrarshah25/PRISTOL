@@ -18,6 +18,7 @@ import NotFoundState from '../Components/Product Page/NotFoundState'
 import showLoading from '../Components/Alerts/loading'
 import fireAlert from '../Components/Alerts/alert'
 import Swal from 'sweetalert2'
+import { getCartItems, setCartItems } from '../utils/cartStorage'
 
 const Product = () => {
   const { id } = useParams()
@@ -27,6 +28,10 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1)
   const [isInWishlist, setIsInWishlist] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    document.title = "Product Details - PPRISTOL";
+  }, []);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -52,6 +57,7 @@ const Product = () => {
 
     if (id) {
       fetchProduct()
+      
     }
   }, [id, navigate])
 
@@ -65,7 +71,7 @@ const Product = () => {
 
   const handleAddToCart = () => {
     showLoading('Adding to cart...')
-    const arr = JSON.parse(localStorage.getItem('cart')) || [];
+    const arr = getCartItems()
     const existingItem = arr.find(item => item.id === product.id)
     
     if (existingItem) {
@@ -81,7 +87,7 @@ const Product = () => {
       arr.push(ob)
     }
     
-    localStorage.setItem('cart', JSON.stringify(arr))
+    setCartItems(arr)
     setTimeout(() => {
       fireAlert('success', 'Product added to cart!')
     }, 1000)

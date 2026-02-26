@@ -4,10 +4,14 @@ import { NavLink } from "react-router-dom";
 import tabs from "../../../data/tabs";
 import Logo from "./Logo";
 import Button from "./Button";
+import { CART_UPDATED_EVENT, getCartCount } from "../../../utils/cartStorage";
 
-const Navbar = ({ cartItemCount = 0, onCartClick }) => {
+const Navbar = ({ cartItemCount, onCartClick = () => {window.location.href = "/cart"} }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [internalCartCount, setInternalCartCount] = useState(() => (
+    typeof cartItemCount === "number" ? cartItemCount : getCartCount()
+  ));
 
   const navTabs = tabs.filter((tab) => tab.isNav);
 
@@ -30,6 +34,27 @@ const Navbar = ({ cartItemCount = 0, onCartClick }) => {
   }, []);
 
   useEffect(() => {
+    if (typeof cartItemCount === "number") {
+      setInternalCartCount(cartItemCount);
+    }
+  }, [cartItemCount]);
+
+  useEffect(() => {
+    if (typeof cartItemCount === "number") return;
+
+    const syncCartCount = () => setInternalCartCount(getCartCount());
+    syncCartCount();
+
+    window.addEventListener("storage", syncCartCount);
+    window.addEventListener(CART_UPDATED_EVENT, syncCartCount);
+
+    return () => {
+      window.removeEventListener("storage", syncCartCount);
+      window.removeEventListener(CART_UPDATED_EVENT, syncCartCount);
+    };
+  }, [cartItemCount]);
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -42,6 +67,7 @@ const Navbar = ({ cartItemCount = 0, onCartClick }) => {
   }, [isOpen]);
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
+  const displayedCartCount = typeof cartItemCount === "number" ? cartItemCount : internalCartCount;
 
   const navLinkClasses = ({ isActive }) => `
     relative font-medium text-[15px] transition-all duration-300
@@ -84,12 +110,12 @@ const Navbar = ({ cartItemCount = 0, onCartClick }) => {
             <button
               onClick={onCartClick}
               className="relative p-2 rounded-full hover:bg-green-50 transition-all duration-300 group"
-              aria-label={`Shopping cart with ${cartItemCount} items`}
+              aria-label={`Shopping cart with ${displayedCartCount} items`}
             >
               <ShoppingCart className="w-5 h-5 text-gray-700 group-hover:text-green-600 transition-colors" />
-              {cartItemCount > 0 && (
+              {displayedCartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs min-w-[20px] h-5 px-1 rounded-full flex items-center justify-center animate-scale-in">
-                  {cartItemCount > 99 ? "99+" : cartItemCount}
+                  {displayedCartCount > 99 ? "99+" : displayedCartCount}
                 </span>
               )}
             </button>
@@ -187,9 +213,9 @@ const Navbar = ({ cartItemCount = 0, onCartClick }) => {
                     aria-label="View cart"
                   >
                     <ShoppingCart className="w-5 h-5 text-gray-700" />
-                    {cartItemCount > 0 && (
+                    {displayedCartCount > 0 && (
                       <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                        {cartItemCount}
+                        {displayedCartCount}
                       </span>
                     )}
                   </button>
