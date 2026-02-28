@@ -11,6 +11,7 @@ import fireAlert from '../Components/Alerts/alert'
 import showLoading from '../Components/Alerts/loading'
 import Swal from 'sweetalert2'
 import { clearCartItems } from '../utils/cartStorage'
+import { sendCheckoutMail } from '../api/Checkout/checkout.api'
 
 const Checkout = () => {
   const location = useLocation()
@@ -73,6 +74,8 @@ const Checkout = () => {
       if (checkoutType === 'cart') {
         clearCartItems()
       }
+
+      await sendCheckoutMail(orderData)
       
       Swal.close(loader)
       fireAlert('success', 'Order placed successfully!')

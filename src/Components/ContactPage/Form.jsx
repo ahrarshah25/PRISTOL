@@ -3,6 +3,7 @@ import Input from './Input';
 import Button from './Button';
 import showLoading from "../Alerts/loading";
 import fireAlert from "../Alerts/alert";
+import { sendContactMail } from '../../api/Contact/contact.api';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from "../../Firebase/config";
 import { Send, User, Mail, MessageSquare } from 'lucide-react';
@@ -34,6 +35,8 @@ const Form = () => {
         status: 'unread',
         createdAt: Date.now()
       });
+
+      sendContactMail(formData.name, formData.email, formData.subject, formData.message);
       
       fireAlert("success", "Message sent successfully!");
       setFormData({ name: '', email: '', subject: '', message: '' });
