@@ -17,7 +17,7 @@ const Description = ({ text, type }) => {
   if (type === "email") {
     return (
       <a 
-        href="mailto:ahrar.0932@gmail.com"
+        href="mailto:pristol.pk@gmail.com"
         className="text-gray-600 hover:text-green-600 transition-colors duration-300"
       >
         {text}
