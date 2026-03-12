@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DescriptionTab from './DescriptionTab'
 import SpecificationsTab from './SpecificationsTab'
-import ReviewsTab from './ReviewsTab'
+import ProductReviews from './ProductReviews'
 
 const Tabs = ({ product }) => {
   const [activeTab, setActiveTab] = useState('description')
@@ -19,7 +19,7 @@ const Tabs = ({ product }) => {
       case 'specifications':
         return <SpecificationsTab product={product} />
       case 'reviews':
-        return <ReviewsTab />
+        return <ProductReviews productId={product.id} />
       default:
         return null
     }

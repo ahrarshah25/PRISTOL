@@ -11,7 +11,7 @@ import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
-
+import Reviews from './pages/Reviews';
 
 const App = () => {
   return (
@@ -27,6 +27,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/reviews" element={<Reviews />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
